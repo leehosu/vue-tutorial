@@ -1,18 +1,37 @@
 <template>
   <div id="app">
-    <span @click = "go('/')"> main </span>
-    <span @click = "go('/news')"> news </span>
-    <router-view> </router-view>
+    Parent Counter : {{ getCounter }} <br>
+    <button @click="addClick"> + </button>
+    <button @click="minClick"> - </button>
+    <button @click="tenClick"> +10 </button>
+    <child></child>
   </div>
 </template>
 
 <script>
+import child from './components/vuex-tutotial/child'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'app',
+  components : {
+    child
+  },
   methods : {
-    go (targetName) {
-      this.$router.push(targetName)
+    addClick() {
+      this.$store.commit('plusCounter')
+    },
+    minClick() {
+      this.$store.commit('minCounter')
+    },
+    tenClick(){
+      this.$store.commit('tenPlus', 10)
     }
+  },
+  computed : {
+    ...mapGetters([
+      'getCounter'
+    ])
   }
 }
 </script>
